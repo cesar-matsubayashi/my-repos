@@ -1,5 +1,6 @@
 ﻿using MyRepos.Application.Common.Persistence;
 using MyRepos.Domain.Project;
+using MyRepos.Domain.Project.ValueObjects;
 
 namespace MyRepos.Infrastructure.Persistence.Repositories
 {
@@ -16,6 +17,11 @@ namespace MyRepos.Infrastructure.Persistence.Repositories
         {
             await _dbContext.AddAsync(project);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Project?> GetByIdAsync(ProjectId Id)
+        {
+            return await _dbContext.Projects.FindAsync(Id);
         }
     }
 }

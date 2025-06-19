@@ -3,6 +3,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyRepos.Application.Projects.Commands.CreateProject;
+using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Contracts.Project;
 using MyRepos.Domain.Project;
 
@@ -25,9 +26,21 @@ namespace MyRepos.Api.Controllers
             CreateProjectRequest request)
         {
             var command = _mapper.Map<CreateProjectCommand>(request);
-            ErrorOr<Project> createProjectResult = await _mediator.Send(command);
+            var createProjectResult = await _mediator.Send(command);
 
             return createProjectResult.Match(
+                project => Ok(_mapper.Map<ProjectResponse>(project)),
+                errors => Problem(errors));
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetProjectById(
+            Guid id)
+        {
+            var query = _mapper.Map<GetProjectByIdQuery>(id);
+            var getProjectQuery = await _mediator.Send(query);
+
+            return getProjectQuery.Match(
                 project => Ok(_mapper.Map<ProjectResponse>(project)),
                 errors => Problem(errors));
         }
