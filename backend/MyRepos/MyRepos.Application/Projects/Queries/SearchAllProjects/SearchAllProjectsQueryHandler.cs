@@ -8,9 +8,9 @@ namespace MyRepos.Application.Projects.Queries.SearchAllProjects
     public class SearchAllProjectsQueryHandler
         : IRequestHandler<SearchAllProjectsQuery, ErrorOr<List<Project>>>
     {
-        private readonly IGithubServive _githubService;
+        private readonly IGithubService _githubService;
 
-        public SearchAllProjectsQueryHandler(IGithubServive githubService)
+        public SearchAllProjectsQueryHandler(IGithubService githubService)
         {
             _githubService = githubService;
         }

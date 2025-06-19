@@ -8,10 +8,10 @@ namespace MyRepos.Application.Projects.Queries.ListMyProjects
     public class ListMyProjectsQueryHandler
         : IRequestHandler<ListMyProjectsQuery, ErrorOr<List<Project>>>
     {
-        private readonly IGithubServive _githubService;
+        private readonly IGithubService _githubService;
 
         public ListMyProjectsQueryHandler(
-            IGithubServive githubService)
+            IGithubService githubService)
         {
             _githubService = githubService;
         }

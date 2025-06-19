@@ -10,11 +10,11 @@ namespace MyRepos.Application.Projects.Commands.CreateProject
         : IRequestHandler<CreateProjectCommand, ErrorOr<Project>>
     {
         private readonly IProjectRepository _projectRepository;
-        private readonly IGithubServive _githubService;
+        private readonly IGithubService _githubService;
 
         public CreateProjectCommandHandler(
             IProjectRepository projectRepository, 
-            IGithubServive githubService)
+            IGithubService githubService)
         {
             _projectRepository = projectRepository;
             _githubService = githubService;

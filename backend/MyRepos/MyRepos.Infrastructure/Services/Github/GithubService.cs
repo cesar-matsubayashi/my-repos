@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace MyRepos.Infrastructure.Services.Github
 {
-    public class GithubService : IGithubServive
+    public class GithubService : IGithubService
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonOptions;

@@ -15,7 +15,7 @@ namespace MyRepos.Infrastructure
         {
             services.AddHttpClient();
 
-            services.AddHttpClient<IGithubServive, GithubService>(client =>
+            services.AddHttpClient<IGithubService, GithubService>(client =>
             {
                 client.DefaultRequestHeaders.Add("User-Agent", "MyRepos/1.0");
                 client.Timeout = TimeSpan.FromSeconds(30);

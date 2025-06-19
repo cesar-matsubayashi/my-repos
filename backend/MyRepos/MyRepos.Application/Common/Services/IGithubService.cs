@@ -2,7 +2,7 @@
 
 namespace MyRepos.Application.Common.Services
 {
-    public interface IGithubServive
+    public interface IGithubService
     {
         Task<RepositoryMetadata> GetRepositoryMetadata(string url);
         Task<List<RepositoryMetadata>> GetAllRepositoryMetadataByUser(string user);
