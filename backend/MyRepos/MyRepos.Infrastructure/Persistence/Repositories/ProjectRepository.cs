@@ -1,4 +1,5 @@
-﻿using MyRepos.Application.Common.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using MyRepos.Application.Common.Persistence;
 using MyRepos.Domain.Project;
 using MyRepos.Domain.Project.ValueObjects;
 
@@ -17,6 +18,11 @@ namespace MyRepos.Infrastructure.Persistence.Repositories
         {
             await _dbContext.AddAsync(project);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Project>> GetAllAsync()
+        {
+            return await _dbContext.Projects.ToListAsync();
         }
 
         public async Task<Project?> GetByIdAsync(ProjectId Id)
