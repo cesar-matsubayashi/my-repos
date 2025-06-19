@@ -6,6 +6,7 @@ using MyRepos.Application.Projects.Commands.CreateProject;
 using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
 using MyRepos.Application.Projects.Queries.GetProjectById;
+using MyRepos.Application.Projects.Queries.ListFavorites;
 using MyRepos.Application.Projects.Queries.ListMyProjects;
 using MyRepos.Application.Projects.Queries.ListProject;
 using MyRepos.Contracts.Project;
@@ -109,6 +110,17 @@ namespace MyRepos.Api.Controllers
 
             return changeFavoriteCommand.Match(
                 project => Ok(_mapper.Map<ProjectResponse>(project)),
+                errors => Problem(errors));
+        }
+
+        [HttpGet("favoritos")]
+        public async Task<IActionResult> ListFavorites()
+        {
+            var query = new ListFavoritesQuery();
+            var listFavoritesQuery = await _mediator.Send(query);
+
+            return listFavoritesQuery.Match(
+                projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
                 errors => Problem(errors));
         }
     }

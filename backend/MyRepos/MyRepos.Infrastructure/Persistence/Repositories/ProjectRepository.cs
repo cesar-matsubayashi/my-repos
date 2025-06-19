@@ -31,6 +31,13 @@ namespace MyRepos.Infrastructure.Persistence.Repositories
             return await _dbContext.Projects.ToListAsync();
         }
 
+        public async Task<List<Project>> GetAllFavoritesAsync()
+        {
+            return await _dbContext.Projects
+                .Where(p => p.IsFavorite == true)
+                .ToListAsync();
+        }
+
         public async Task<Project?> GetByIdAsync(ProjectId Id)
         {
             return await _dbContext.Projects.FindAsync(Id);

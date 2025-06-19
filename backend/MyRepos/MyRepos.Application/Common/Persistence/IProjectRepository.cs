@@ -10,5 +10,6 @@ namespace MyRepos.Application.Common.Persistence
         Task<List<Project>> GetAllAsync();
         Task UpdateAsync(Project project);
         Task DeleteAsync(Project project); 
+        Task<List<Project>> GetAllFavoritesAsync();
     }
 }

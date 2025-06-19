@@ -1,0 +1,4 @@
+@host = https://localhost:7174
+
+GET {{host}}/repositorio/favoritos
+Content-Type: application/json
