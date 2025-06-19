@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MyRepos.Application.Projects.Commands.CreateProject;
+using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
 using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Contracts.Project;
@@ -23,6 +24,9 @@ namespace MyRepos.Api.Common.Mapping
             config.NewConfig<(UpdateProjectRequest Request, Guid Id), UpdateProjectCommand>()
                 .Map(dest => dest.Id, src => ProjectId.Create(src.Id))
                 .Map(dest => dest, src => src.Request);
+
+            config.NewConfig<Guid, DeleteProjectCommand>()
+                .Map(dest => dest.Id, src => ProjectId.Create(src));
         }
     }
 }

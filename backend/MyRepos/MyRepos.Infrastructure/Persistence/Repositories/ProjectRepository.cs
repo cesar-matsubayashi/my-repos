@@ -20,6 +20,12 @@ namespace MyRepos.Infrastructure.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(Project project)
+        {
+            _dbContext.Remove(project);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<List<Project>> GetAllAsync()
         {
             return await _dbContext.Projects.ToListAsync();

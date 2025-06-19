@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyRepos.Application.Projects.Commands.CreateProject;
+using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
 using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Application.Projects.Queries.ListProject;
@@ -66,6 +67,18 @@ namespace MyRepos.Api.Controllers
 
             return updateProjectCommand.Match(
                 project => Ok(_mapper.Map<ProjectResponse>(project)),
+                errors => Problem(errors));
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteProject(
+            Guid id)
+        {
+            var command = _mapper.Map<DeleteProjectCommand>(id);
+            var deleteProjectCommand = await _mediator.Send(command);
+
+            return deleteProjectCommand.Match(
+                _ => NoContent(),
                 errors => Problem(errors));
         }
     }
