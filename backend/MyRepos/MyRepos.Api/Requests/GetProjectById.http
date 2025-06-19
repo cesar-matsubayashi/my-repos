@@ -1,5 +1,0 @@
-@host = https://localhost:7174
-@id = 827bb66e-e565-4418-8f28-e9bd523c0025
-
-GET {{host}}/repositorio/{{id}}
-Content-Type: application/json

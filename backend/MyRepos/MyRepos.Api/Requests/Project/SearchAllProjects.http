@@ -1,0 +1,6 @@
+@host = https://localhost:7174
+@keyword = tetris
+@page = 2
+
+GET {{host}}/repositorio/search?q={{keyword}}&page={{page}}
+Content-Type: application/json

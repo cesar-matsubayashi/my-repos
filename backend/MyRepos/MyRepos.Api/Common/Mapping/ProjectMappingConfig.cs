@@ -4,6 +4,7 @@ using MyRepos.Application.Projects.Commands.CreateProject;
 using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
 using MyRepos.Application.Projects.Queries.GetProjectById;
+using MyRepos.Application.Projects.Queries.SearchAllProjects;
 using MyRepos.Contracts.Project;
 using MyRepos.Contracts.Project.Favorite;
 using MyRepos.Domain.Project;
@@ -33,6 +34,10 @@ namespace MyRepos.Api.Common.Mapping
             config.NewConfig<(ChangeFavoriteRequest Request, Guid Id), ChangeFavoriteCommand>()
                 .Map(dest => dest.Id, src => ProjectId.Create(src.Id))
                 .Map(dest => dest.IsFavorite, src => src.Request.IsFavorite);
+
+            config.NewConfig<(string Query, int Page), SearchAllProjectsQuery>()
+               .Map(dest => dest.Keyword, src => src.Query)
+               .Map(dest => dest.Page, src => src.Page);
         }
     }
 }

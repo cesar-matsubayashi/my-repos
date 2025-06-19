@@ -6,5 +6,6 @@ namespace MyRepos.Application.Common.Services
     {
         Task<RepositoryMetadata> GetRepositoryMetadata(string url);
         Task<List<RepositoryMetadata>> GetAllRepositoryMetadataByUser(string user);
+        Task<GithubSearchResponse> GetAllRepositoryMetadataByName(string name, int page);
     }
 }

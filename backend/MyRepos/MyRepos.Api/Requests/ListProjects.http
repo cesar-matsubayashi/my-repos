@@ -1,4 +1,0 @@
-@host = https://localhost:7174
-
-GET {{host}}/repositorio
-Content-Type: application/json

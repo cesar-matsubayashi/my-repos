@@ -9,6 +9,7 @@ using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Application.Projects.Queries.ListFavorites;
 using MyRepos.Application.Projects.Queries.ListMyProjects;
 using MyRepos.Application.Projects.Queries.ListProject;
+using MyRepos.Application.Projects.Queries.SearchAllProjects;
 using MyRepos.Contracts.Project;
 using MyRepos.Contracts.Project.Favorite;
 
@@ -120,6 +121,19 @@ namespace MyRepos.Api.Controllers
             var listFavoritesQuery = await _mediator.Send(query);
 
             return listFavoritesQuery.Match(
+                projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
+                errors => Problem(errors));
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchAllProjects(
+            [FromQuery] string q,
+            [FromQuery] int page)
+        {
+            var query = _mapper.Map<SearchAllProjectsQuery>((q, page));
+            var searchAllProjects = await _mediator.Send(query);
+
+            return searchAllProjects.Match(
                 projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
                 errors => Problem(errors));
         }

@@ -1,6 +1,5 @@
 ﻿using MyRepos.Application.Common.Services;
 using MyRepos.Contracts.RepositoryMetadata;
-using System;
 using System.Text.Json;
 
 namespace MyRepos.Infrastructure.Services.Github
@@ -61,6 +60,26 @@ namespace MyRepos.Infrastructure.Services.Github
 
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonSerializer.Deserialize<List<RepositoryMetadata>>(json, _jsonOptions);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Failed to get repository metadata: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<GithubSearchResponse> GetAllRepositoryMetadataByName(string name, int page = 1)
+        {
+            try
+            {
+                int perPage = 10;
+                var response = await _httpClient.GetAsync($"{BaseUrl}/search/repositories?" +
+                    $"q={name} in:name" +
+                    $"&page={page}" +
+                    $"&per_page={perPage}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<GithubSearchResponse>(json, _jsonOptions);
             }
             catch (HttpRequestException ex)
             {
