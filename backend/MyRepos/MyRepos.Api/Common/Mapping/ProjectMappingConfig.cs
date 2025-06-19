@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using MyRepos.Application.Projects.Commands.AddFavorite;
 using MyRepos.Application.Projects.Commands.CreateProject;
 using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
@@ -26,6 +27,9 @@ namespace MyRepos.Api.Common.Mapping
                 .Map(dest => dest, src => src.Request);
 
             config.NewConfig<Guid, DeleteProjectCommand>()
+                .Map(dest => dest.Id, src => ProjectId.Create(src));
+
+            config.NewConfig<Guid, AddFavoriteCommand>()
                 .Map(dest => dest.Id, src => ProjectId.Create(src));
         }
     }

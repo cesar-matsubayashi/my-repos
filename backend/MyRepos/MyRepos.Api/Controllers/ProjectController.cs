@@ -1,6 +1,7 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyRepos.Application.Projects.Commands.AddFavorite;
 using MyRepos.Application.Projects.Commands.CreateProject;
 using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
@@ -94,6 +95,18 @@ namespace MyRepos.Api.Controllers
 
             return listMyProjectsQuery.Match(
                 projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
+                errors => Problem(errors));
+        }
+
+        [HttpPatch("{id:guid}/favorito")]
+        public async Task<IActionResult> AddFavoriteProject(
+            Guid id)
+        {
+            var command = _mapper.Map<AddFavoriteCommand>(id);
+            var addFavioriteProjectCommand = await _mediator.Send(command);
+
+            return addFavioriteProjectCommand.Match(
+                project => Ok(_mapper.Map<ProjectResponse>(project)),
                 errors => Problem(errors));
         }
     }

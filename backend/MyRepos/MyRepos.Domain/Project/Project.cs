@@ -67,6 +67,16 @@ namespace MyRepos.Domain.Project
             RepositoryUrl = repositoryUrl;
         }
 
+        public void AddToFavorite()
+        {
+            Favorite = true;
+        }
+
+        public void RemoveFromFavorite()
+        {
+            Favorite = false;
+        }
+
 #pragma warning disable CS8618
         private Project() { }
 #pragma warning restore CS8618 
