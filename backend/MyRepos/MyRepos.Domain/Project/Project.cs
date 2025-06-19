@@ -11,7 +11,7 @@ namespace MyRepos.Domain.Project
         public DateTimeOffset UpdatedDateTime { get; private set; }
         public string Owner {  get; private set; }
         public string RepositoryUrl { get; private set; }
-        public bool Favorite { get; private set; }
+        public bool IsFavorite { get; private set; }
 
         private Project(
             ProjectId repositoryId,
@@ -67,14 +67,9 @@ namespace MyRepos.Domain.Project
             RepositoryUrl = repositoryUrl;
         }
 
-        public void AddToFavorite()
+        public void ChangeFavoriteStatus(bool status)
         {
-            Favorite = true;
-        }
-
-        public void RemoveFromFavorite()
-        {
-            Favorite = false;
+            IsFavorite = status;
         }
 
 #pragma warning disable CS8618

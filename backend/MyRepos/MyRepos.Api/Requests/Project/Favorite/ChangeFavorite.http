@@ -1,0 +1,9 @@
+@host = https://localhost:7174
+@id = e46aaee4-c010-4cb8-9599-7614ea685e55
+
+PATCH {{host}}/repositorio/{{id}}/favorito
+Content-Type: application/json
+
+{
+  "isFavorite": true
+}

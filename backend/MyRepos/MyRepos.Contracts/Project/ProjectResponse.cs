@@ -8,5 +8,5 @@
         DateTimeOffset UpdatedDateTime,
         string Owner,
         string RepositoryUrl,
-        bool Favorite);
+        bool IsFavorite);
 }

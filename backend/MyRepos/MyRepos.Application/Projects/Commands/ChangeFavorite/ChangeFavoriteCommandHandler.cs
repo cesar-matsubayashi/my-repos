@@ -4,20 +4,20 @@ using MyRepos.Application.Common.Persistence;
 using MyRepos.Domain.Common.Errors;
 using MyRepos.Domain.Project;
 
-namespace MyRepos.Application.Projects.Commands.AddFavorite
+namespace MyRepos.Application.Projects.Commands.ChangeFavorite
 {
-    public class AddFavoriteCommandHandler
-        : IRequestHandler<AddFavoriteCommand, ErrorOr<Project>>
+    public class ChangeFavoriteCommandHandler
+        : IRequestHandler<ChangeFavoriteCommand, ErrorOr<Project>>
     {
         private readonly IProjectRepository _projectRepository;
 
-        public AddFavoriteCommandHandler(IProjectRepository projectRepository)
+        public ChangeFavoriteCommandHandler(IProjectRepository projectRepository)
         {
             _projectRepository = projectRepository;
         }
 
         public async Task<ErrorOr<Project>> Handle(
-            AddFavoriteCommand request, 
+            ChangeFavoriteCommand request, 
             CancellationToken cancellationToken)
         {
             var project = await _projectRepository.GetByIdAsync(request.Id);
@@ -27,7 +27,7 @@ namespace MyRepos.Application.Projects.Commands.AddFavorite
                 return Errors.Project.NotFound;
             }
 
-            project.AddToFavorite();
+            project.ChangeFavoriteStatus(request.IsFavorite);
 
             await _projectRepository.UpdateAsync(project);
 

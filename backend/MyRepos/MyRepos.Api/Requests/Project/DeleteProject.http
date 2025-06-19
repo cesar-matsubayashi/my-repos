@@ -1,0 +1,5 @@
+@host = https://localhost:7174
+@id = 1ec0f2cf-323e-4c94-af44-c3be1d2126f0
+
+DELETE {{host}}/repositorio/{{id}}
+Content-Type: application/json
