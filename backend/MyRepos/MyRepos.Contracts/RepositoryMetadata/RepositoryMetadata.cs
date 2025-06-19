@@ -6,7 +6,7 @@
         string Language,
         DateTimeOffset Updated_At,
         OwnerMetadata Owner,
-        string Url);
+        string Html_Url);
 
     public record OwnerMetadata(
         string Login);
