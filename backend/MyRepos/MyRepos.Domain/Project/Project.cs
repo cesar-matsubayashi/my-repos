@@ -51,6 +51,22 @@ namespace MyRepos.Domain.Project
             return repository;
         }
 
+        public void Update(
+            string name,
+            string description,
+            string language,
+            DateTimeOffset updatedDateTime,
+            string owner,
+            string repositoryUrl)
+        {
+            Name = name;
+            Description = description;
+            Language = language;
+            UpdatedDateTime = updatedDateTime;
+            Owner = owner;
+            RepositoryUrl = repositoryUrl;
+        }
+
 #pragma warning disable CS8618
         private Project() { }
 #pragma warning restore CS8618 

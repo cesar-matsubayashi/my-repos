@@ -8,6 +8,6 @@ namespace MyRepos.Application.Common.Persistence
         Task AddAsync(Project project);
         Task<Project?> GetByIdAsync(ProjectId Id);
         Task<List<Project>> GetAllAsync();
-
+        Task UpdateAsync(Project project);
     }
 }

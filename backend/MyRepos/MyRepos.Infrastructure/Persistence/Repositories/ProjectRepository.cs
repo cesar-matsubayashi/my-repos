@@ -29,5 +29,11 @@ namespace MyRepos.Infrastructure.Persistence.Repositories
         {
             return await _dbContext.Projects.FindAsync(Id);
         }
+
+        public async Task UpdateAsync(Project project)
+        {
+            _dbContext.Projects.Update(project);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyRepos.Application.Projects.Commands.CreateProject;
+using MyRepos.Application.Projects.Commands.UpdateProject;
 using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Application.Projects.Queries.ListProject;
 using MyRepos.Contracts.Project;
@@ -52,6 +53,19 @@ namespace MyRepos.Api.Controllers
 
             return listProjectQuery.Match(
                 projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
+                errors => Problem(errors));
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateProject(
+            UpdateProjectRequest request,
+            Guid id)
+        {
+            var command = _mapper.Map<UpdateProjectCommand>((request, id));
+            var updateProjectCommand = await _mediator.Send(command);
+
+            return updateProjectCommand.Match(
+                project => Ok(_mapper.Map<ProjectResponse>(project)),
                 errors => Problem(errors));
         }
     }
