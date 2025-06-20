@@ -67,6 +67,10 @@ class API {
   public create(repositoryUrl: string): Promise<RepositoryResponse> {
     return this._makeRequest("/repositorio", "POST", { repositoryUrl });
   }
+
+  public myRepositories(): Promise<RepositoryResponse[]> {
+    return this._makeRequest("/repositorio/meus", "GET");
+  }
 }
 
 const API_URL = import.meta.env.VITE_API_URL;

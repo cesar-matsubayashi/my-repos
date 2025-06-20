@@ -22,6 +22,8 @@ export default function AddForm() {
     if (typeof repositoryUrl === "string") {
       addRepository(repositoryUrl);
     }
+
+    setInputValue('');
   }
 
   return (
