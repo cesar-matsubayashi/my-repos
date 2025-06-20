@@ -5,8 +5,11 @@ import api from "../utils/api";
 interface RepositoryContextType {
   repositoryList: RepositoryResponse[];
   myRepositoryList: RepositoryResponse[];
+  favoritesList: RepositoryResponse[];
   addRepository: (repositoryUrl: string) => Promise<void>;
   myRepositories: () => Promise<void>;
+  myFavorites: () => Promise<void>;
+  changeFavoriteStatus: (status: boolean) => Promise<void>;
 }
 
 const RepositoryContext = createContext<RepositoryContextType | undefined>(
@@ -16,6 +19,7 @@ const RepositoryContext = createContext<RepositoryContextType | undefined>(
 export default function RepositoryProvider({ children }: { children: ReactNode }) {
   const [repositoryList, setRepositoryList] = useState<RepositoryResponse[]>([]);
   const [myRepositoryList, setMyRepositoryList] = useState<RepositoryResponse[]>([]);
+  const [favoritesList, setFavoritesList] = useState<RepositoryResponse[]>([]);
 
   const addRepository = async (repositoryUrl: string): Promise<void> => {
     try {
@@ -35,8 +39,40 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     }
   };
 
+  const changeFavoriteStatus = async (status: boolean): Promise<void> => {
+    try {
+      const repository: RepositoryResponse = await api.changeFavoriteStatus(status);
+      
+      if (status){
+        setFavoritesList((prevList) => [...prevList, repository]);
+      } else {
+        setFavoritesList((prevList) => prevList.filter(
+          repo => repo.id !== repository.id))
+      }
+      
+    } catch (error) {
+      console.error("Failed to create repository:", error);
+    }
+  };
+
+  const myFavorites = async (): Promise<void> => {
+    try {
+      const repositories: RepositoryResponse[] = await api.myFavorites();
+      setFavoritesList(repositories);
+    } catch (error) {
+      console.error("Failed to create repository:", error);
+    }
+  };
+
   return (
-    <RepositoryContext.Provider value={{ repositoryList, addRepository, myRepositoryList, myRepositories }}>
+    <RepositoryContext.Provider value={{ 
+      repositoryList, 
+      addRepository, 
+      myRepositoryList, 
+      myRepositories, 
+      favoritesList, 
+      myFavorites,
+      changeFavoriteStatus }}>
       {children}
     </RepositoryContext.Provider>
   );
