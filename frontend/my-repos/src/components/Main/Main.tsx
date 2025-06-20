@@ -1,17 +1,10 @@
 import './Main.css'
 import AddForm from "./AddForm/AddForm";
-import RepositoryCard from '../RepositoryCard/RepositoryCard';
 import { useRepository } from '../../contexts/RepositoryContext';
-import { useState } from 'react';
-import Pagination from '../Pagination/Pagination';
+import RepositoryList from '../RepositoryList/RepositoryList';
 
 export default function Main() {
   const { repositoryList } = useRepository();
-  const [ currentPage, setCurrentPage ] = useState(1);
-  const itemsPerPage = 10;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = repositoryList.slice(startIndex, startIndex + itemsPerPage);
-  const totalPages = Math.ceil(repositoryList.length / itemsPerPage);
 
   return (
     <main className="main">
@@ -26,18 +19,7 @@ export default function Main() {
         </p>
         <AddForm />
       </section>
-      <section className='repositories'>
-        <div className='repositories__card'>
-          {currentItems.map((repository) => (
-            <RepositoryCard key={repository.id} repository={repository}/>
-          ))}
-        </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
-      </section>
+      <RepositoryList repositories={repositoryList}/>
     </main>
   );
 }

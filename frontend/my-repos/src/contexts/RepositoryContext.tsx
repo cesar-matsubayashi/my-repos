@@ -4,6 +4,7 @@ import api from "../utils/api";
 
 interface RepositoryContextType {
   repositoryList: RepositoryResponse[];
+  myRepositoryList: RepositoryResponse[];
   addRepository: (repositoryUrl: string) => Promise<void>;
   myRepositories: () => Promise<void>;
 }
@@ -14,6 +15,7 @@ const RepositoryContext = createContext<RepositoryContextType | undefined>(
 
 export default function RepositoryProvider({ children }: { children: ReactNode }) {
   const [repositoryList, setRepositoryList] = useState<RepositoryResponse[]>([]);
+  const [myRepositoryList, setMyRepositoryList] = useState<RepositoryResponse[]>([]);
 
   const addRepository = async (repositoryUrl: string): Promise<void> => {
     try {
@@ -27,14 +29,14 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
   const myRepositories = async (): Promise<void> => {
     try {
       const repositories: RepositoryResponse[] = await api.myRepositories();
-      setRepositoryList(repositories);
+      setMyRepositoryList(repositories);
     } catch (error) {
       console.error("Failed to create repository:", error);
     }
   };
 
   return (
-    <RepositoryContext.Provider value={{ repositoryList, addRepository, myRepositories }}>
+    <RepositoryContext.Provider value={{ repositoryList, addRepository, myRepositoryList, myRepositories }}>
       {children}
     </RepositoryContext.Provider>
   );

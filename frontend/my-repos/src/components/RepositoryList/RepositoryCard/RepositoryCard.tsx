@@ -1,5 +1,5 @@
 import "./RepositoryCard.css";
-import type { RepositoryResponse } from "../../utils/api";
+import type { RepositoryResponse } from "../../../utils/api";
 
 type RepositoryCardProps = {
   repository: RepositoryResponse;

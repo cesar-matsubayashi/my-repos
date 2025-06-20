@@ -71,6 +71,10 @@ class API {
   public myRepositories(): Promise<RepositoryResponse[]> {
     return this._makeRequest("/repositorio/meus", "GET");
   }
+
+  public myFavorites(): Promise<RepositoryResponse[]> {
+    return this._makeRequest("/repositorio/favoritos", "GET");
+  }
 }
 
 const API_URL = import.meta.env.VITE_API_URL;
