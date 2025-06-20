@@ -12,6 +12,7 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseCors("AllowFrontend");
 app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 app.MapControllers();
