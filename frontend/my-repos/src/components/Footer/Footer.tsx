@@ -21,7 +21,7 @@ export default function Footer() {
           </li>
           <li>
             <Link
-              to="https://www.linkedin.com/in/cesar-matsubayashi-587998b5"
+              to="https://www.linkedin.com/in/cesar-matsubayashi"
               target="_blank"
               rel="noopener noreferrer"
               className="footer__link"
