@@ -1,0 +1,43 @@
+import { createContext, useState, useContext, type ReactNode } from "react";
+import type { RepositoryResponse } from "../utils/api";
+import api from "../utils/api";
+
+interface RepositoryContextType {
+  repositoryList: RepositoryResponse[];
+  addRepository: (repositoryUrl: string) => Promise<void>;
+}
+
+const RepositoryContext = createContext<RepositoryContextType | undefined>(
+  undefined
+);
+
+export default function RepositoryProvider({ children }: { children: ReactNode }) {
+  const [repositoryList, setRepositoryList] = useState<RepositoryResponse[]>([]);
+
+  const addRepository = async (repositoryUrl: string): Promise<void> => {
+    try {
+      const newRepo: RepositoryResponse = await api.create(repositoryUrl);
+      setRepositoryList((prevList) => [...prevList, newRepo]);
+      
+      console.log("Repository created:", newRepo);
+    } catch (error) {
+      console.error("Failed to create repository:", error);
+    }
+  };
+
+  return (
+    <RepositoryContext.Provider value={{ repositoryList, addRepository }}>
+      {children}
+    </RepositoryContext.Provider>
+  );
+};
+
+export const useRepository = (): RepositoryContextType => {
+  const context = useContext(RepositoryContext);
+  
+  if (!context) {
+    throw new Error("useRepository must be used within a RepositoryProvider");
+  }
+
+  return context;
+};

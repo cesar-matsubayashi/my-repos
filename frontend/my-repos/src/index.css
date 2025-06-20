@@ -2,9 +2,15 @@
 @import url("./vendor/fonts.css");
 
 :root {
-  --primary-bg: white;
-  --secondary-bg: #f5f6f7;
-  --primary-text-color: white;
-  --secondary-text-color: #b6bcbf;
-  --accent-text-color: white;
+  --primary-bg: #181818;
+  --secondary-bg: #363636;
+
+  --primary-text-color: #eeeeee;
+  --secondary-text-color: #9f9f9f;
+  --tertiary-text-color: #575757;
+
+  --primary-accent-color: white;
+
+  --button-accent: #1c6b2b;
+  --button-accent-hover: #21732f;
 }

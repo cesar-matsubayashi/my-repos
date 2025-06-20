@@ -1,0 +1,45 @@
+.form_repository {
+  width: 608px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+  box-shadow: inset 0 0 0 1px #d1d2d6;
+}
+
+.form__input_el_repositoryUrl {
+  width: 100%;
+  height: 62px;
+  margin: 1px 0 1px 24px;
+  border-radius: 50px;
+}
+
+.form__input_el_repositoryUrl:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 1104px) {
+  .form_repository {
+    width: 452px;
+    margin-bottom: 48px;
+  }
+
+  .form__input_el_repositoryUrl {
+    height: 54px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .form_repository {
+    width: 288px;
+    flex-direction: column;
+    box-shadow: none;
+  }
+
+  .form__input_el_repositoryUrl {
+    width: 256px;
+    margin: 0 0 16px 0;
+    padding: 0 16px;
+    box-shadow: inset 0 0 0 1px #d1d2d6;
+  }
+}
