@@ -1,0 +1,10 @@
+.page {
+  max-width: 1440px;
+  min-height: 100vh;
+  padding: 0 calc((100vw - 1440px) / 2);
+  color: var(--primary-text-color);
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  position: relative;
+}

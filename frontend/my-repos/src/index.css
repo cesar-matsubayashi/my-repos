@@ -1,0 +1,10 @@
+@import url("./vendor/normalize.css");
+@import url("./vendor/fonts.css");
+
+:root {
+  --primary-bg: white;
+  --secondary-bg: #f5f6f7;
+  --primary-text-color: white;
+  --secondary-text-color: #b6bcbf;
+  --accent-text-color: white;
+}
