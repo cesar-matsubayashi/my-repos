@@ -1,6 +1,7 @@
 ﻿namespace MyRepos.Contracts.RepositoryMetadata
 {
     public record GithubSearchResponse(
+        int Total_Count,
         List<GithubSearchRepositoryMetadata> Items);
 
     public record GithubSearchRepositoryMetadata(
