@@ -1,0 +1,16 @@
+@import url("./vendor/normalize.css");
+@import url("./vendor/fonts.css");
+
+:root {
+  --primary-bg: #181818;
+  --secondary-bg: #363636;
+
+  --primary-text-color: #eeeeee;
+  --secondary-text-color: #9f9f9f;
+  --tertiary-text-color: #575757;
+
+  --primary-accent-color: white;
+
+  --button-accent: #1c6b2b;
+  --button-accent-hover: #21732f;
+}
