@@ -19,13 +19,15 @@ export default function RepositoryList({
   const [ currentPage, setCurrentPage ] = useState(1);
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = repositories.slice(startIndex, startIndex + itemsPerPage);
   const { searchRepositories, searchValue } = useRepository();
-
+  
+  let currentItems: RepositoryResponse[]; 
   let totalPages: number;
   if(searchPage){
+    currentItems = repositories;
     totalPages = Math.ceil(totalSearchCount/ itemsPerPage);
   }else{
+    currentItems = repositories.slice(startIndex, startIndex + itemsPerPage);
     totalPages = Math.ceil(repositories.length/ itemsPerPage);
   }
 
