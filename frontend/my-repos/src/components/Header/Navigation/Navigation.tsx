@@ -1,5 +1,6 @@
 import "./Navigation.css";
 import { NavLink } from "react-router-dom";
+import SearchForm from "./SearchForm/SearchForm";
 
 export default function Navigation() {
 
@@ -19,6 +20,9 @@ export default function Navigation() {
         <NavLink className="navigation__navlink" to="/meusrepositorios" end>
           Meus Repositórios
         </NavLink>
+      </li>
+      <li className="navigation__search">
+        <SearchForm />
       </li>
     </ul>
   );

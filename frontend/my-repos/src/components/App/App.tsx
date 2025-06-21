@@ -5,6 +5,7 @@ import Main from '../Main/Main';
 import RepositoryProvider from '../../contexts/RepositoryContext';
 import Favorites from '../Favorites/Favorites';
 import MyRepositories from '../MyRepositories/MyRepositories';
+import SearchResult from '../SearchResult/SearchResult';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route index element={ <Main /> } />
             <Route path="/favoritos" element={ <Favorites /> } />
             <Route path="/meusrepositorios" element={ <MyRepositories /> } />
+            <Route path="/search" element={ <SearchResult /> } />
           </Route>
         </Routes>
       </div>

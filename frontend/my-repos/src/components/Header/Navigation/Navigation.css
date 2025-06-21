@@ -18,3 +18,7 @@
   position: relative;
   color: var(--accent-text-color);
 }
+
+.navigation__search {
+  padding: 22px 12px 0 12px;
+}

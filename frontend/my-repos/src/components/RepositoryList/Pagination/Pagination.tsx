@@ -1,10 +1,12 @@
 import './Pagination.css';
+import { useRepository } from '../../../contexts/RepositoryContext';
 
 interface PaginationProps {
       currentPage: number;
       totalPages: number;
       onPageChange: (page: number) => void;
       siblingCount?: number;
+      searchPage: boolean
     }
 
 export default function Pagination({
@@ -12,7 +14,10 @@ export default function Pagination({
   totalPages,
   onPageChange,
   siblingCount = 2,
+  searchPage = false
 }: PaginationProps){
+  
+   const { searchRepositories, searchValue } = useRepository();
   
   if (totalPages <= 1) return null;
 
@@ -54,7 +59,11 @@ export default function Pagination({
 
   const handlePrevClick = () => {
     if (currentPage > 1) {
-      onPageChange(currentPage - 1);
+      if(searchPage){
+        searchRepositories(searchValue, currentPage);
+      }else{
+        onPageChange(currentPage - 1);
+      }
     }
   };
 

@@ -1,15 +1,19 @@
 import { createContext, useState, useContext, type ReactNode } from "react";
-import type { RepositoryResponse } from "../utils/api";
+import type { RepositoryResponse, SearchResponse } from "../utils/api";
 import api from "../utils/api";
 
 interface RepositoryContextType {
   repositoryList: RepositoryResponse[];
   myRepositoryList: RepositoryResponse[];
   favoritesList: RepositoryResponse[];
+  searchList: SearchResponse;
+  searchValue: string, 
+  setSearchValue: (value: string) => void;
   addRepository: (repositoryUrl: string) => Promise<void>;
   myRepositories: () => Promise<void>;
   myFavorites: () => Promise<void>;
   changeFavoriteStatus: (status: boolean) => Promise<void>;
+  searchRepositories: (keyword: string, page: number) => Promise<void>;
 }
 
 const RepositoryContext = createContext<RepositoryContextType | undefined>(
@@ -20,6 +24,11 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
   const [repositoryList, setRepositoryList] = useState<RepositoryResponse[]>([]);
   const [myRepositoryList, setMyRepositoryList] = useState<RepositoryResponse[]>([]);
   const [favoritesList, setFavoritesList] = useState<RepositoryResponse[]>([]);
+  const [searchList, setSearchList] = useState<SearchResponse>({
+      totalCount: 0,
+      projects: [],
+    });
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const addRepository = async (repositoryUrl: string): Promise<void> => {
     try {
@@ -54,11 +63,21 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
       console.error("Failed to create repository:", error);
     }
   };
-
+  
   const myFavorites = async (): Promise<void> => {
     try {
       const repositories: RepositoryResponse[] = await api.myFavorites();
       setFavoritesList(repositories);
+    } catch (error) {
+      console.error("Failed to create repository:", error);
+    }
+  };
+
+  const searchRepositories = async (keyword: string, page: number = 1 ): Promise<void> => {
+    try {
+      const repositories: SearchResponse = await api.searchRepositories(keyword, page);
+      setSearchList(repositories);
+      console.log(repositories);
     } catch (error) {
       console.error("Failed to create repository:", error);
     }
@@ -72,7 +91,11 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
       myRepositories, 
       favoritesList, 
       myFavorites,
-      changeFavoriteStatus }}>
+      changeFavoriteStatus,
+      searchList,
+      searchRepositories,
+      searchValue, 
+      setSearchValue }}>
       {children}
     </RepositoryContext.Provider>
   );

@@ -21,6 +21,11 @@ export interface RepositoryResponse {
   isFavorite: boolean;
 }
 
+export interface SearchResponse {
+  totalCount: number;
+  projects: RepositoryResponse[];
+}
+
 class API {
   private _url: string;
   private _headers: Record<string, string>;
@@ -80,6 +85,16 @@ class API {
     return this._makeRequest("/repositorio/favoritos", "PATCH", {
       isFavorite: status,
     });
+  }
+
+  public searchRepositories(
+    keyword: string,
+    page: number
+  ): Promise<SearchResponse> {
+    return this._makeRequest(
+      `/repositorio/search?q=${keyword}&page=${page}`,
+      "GET"
+    );
   }
 }
 
