@@ -2,11 +2,12 @@
 using MediatR;
 using MyRepos.Application.Common.Services;
 using MyRepos.Domain.Project;
+using MyRepos.Domain.Search;
 
 namespace MyRepos.Application.Projects.Queries.SearchAllProjects
 {
     public class SearchAllProjectsQueryHandler
-        : IRequestHandler<SearchAllProjectsQuery, ErrorOr<List<Project>>>
+        : IRequestHandler<SearchAllProjectsQuery, ErrorOr<SearchResult>>
     {
         private readonly IGithubService _githubService;
 
@@ -15,7 +16,7 @@ namespace MyRepos.Application.Projects.Queries.SearchAllProjects
             _githubService = githubService;
         }
 
-        public async Task<ErrorOr<List<Project>>> Handle(
+        public async Task<ErrorOr<SearchResult>> Handle(
             SearchAllProjectsQuery request, 
             CancellationToken cancellationToken)
         {
@@ -32,7 +33,9 @@ namespace MyRepos.Application.Projects.Queries.SearchAllProjects
                     project.Owner.Login,
                     project.Html_Url));
 
-            return projects;
+            var search = SearchResult.Create(metadata.Total_Count, projects);
+
+            return search;
         }
     }
 }

@@ -12,6 +12,7 @@ using MyRepos.Application.Projects.Queries.ListProject;
 using MyRepos.Application.Projects.Queries.SearchAllProjects;
 using MyRepos.Contracts.Project;
 using MyRepos.Contracts.Project.Favorite;
+using MyRepos.Contracts.SearchResult;
 
 namespace MyRepos.Api.Controllers
 {
@@ -134,7 +135,7 @@ namespace MyRepos.Api.Controllers
             var searchAllProjects = await _mediator.Send(query);
 
             return searchAllProjects.Match(
-                projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
+                projects => Ok(_mapper.Map<SearchResultResponse>(projects)),
                 errors => Problem(errors));
         }
     }
