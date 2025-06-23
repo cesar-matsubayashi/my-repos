@@ -1,15 +1,46 @@
 import "./RepositoryCard.css";
 import type { RepositoryResponse } from "../../../utils/api";
+import { useRepository } from "../../../contexts/RepositoryContext";
 
 type RepositoryCardProps = {
   repository: RepositoryResponse;
 };
 
 export default function RepositoryCard({ repository }: RepositoryCardProps) {
+  const { changeFavoriteStatus } = useRepository();
+  
+  const favoriteIcon = (filled: boolean) => {
+    const color: string = "#1c6b2b"
+
+    const handleFavorite = () => {
+      changeFavoriteStatus(repository.id);
+    }
+
+    return (
+      <svg
+        onClick={handleFavorite}
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill={filled ? color : "none"}
+        stroke={filled ? color : "#575757"}
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+        style={{cursor: "pointer"}}
+      >
+        <polygon points="12 2 15 10 23 10 17 14 19 22 12 17 5 22 7 14 1 10 9 10" />
+      </svg>
+    );
+  }
 
   return (
     <div className="repository-card" id={repository.id}>
-      <h2 className="repository-card__name">{repository.name}</h2>
+      <div className="repository-card__header">
+        <h2 className="repository-card__name">{repository.name}</h2>
+        {favoriteIcon(repository.isFavorite)}
+      </div>
       <p className="repository-card__description">{repository.description}</p>
       <div className="repository-card__bottom">
         <div className="repository-card__language">

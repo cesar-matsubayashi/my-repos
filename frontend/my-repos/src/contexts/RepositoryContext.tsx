@@ -12,7 +12,7 @@ interface RepositoryContextType {
   addRepository: (repositoryUrl: string) => Promise<void>;
   myRepositories: () => Promise<void>;
   myFavorites: () => Promise<void>;
-  changeFavoriteStatus: (status: boolean) => Promise<void>;
+  changeFavoriteStatus: (id: string) => Promise<void>;
   searchRepositories: (keyword: string, page: number) => Promise<void>;
 }
 
@@ -48,17 +48,26 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     }
   };
 
-  const changeFavoriteStatus = async (status: boolean): Promise<void> => {
+  const changeFavoriteStatus = async (id: string): Promise<void> => {
+    const repository = repositoryList.find((r) => r.id === id);
+    if (!repository) return;
+    
     try {
-      const repository: RepositoryResponse = await api.changeFavoriteStatus(status);
+      const updated: RepositoryResponse = 
+        await api.changeFavoriteStatus(id, !repository.isFavorite);
       
-      if (status){
-        setFavoritesList((prevList) => [...prevList, repository]);
+      if (updated.isFavorite){
+        setFavoritesList((prevList) => [...prevList, updated]);
+
+        
       } else {
         setFavoritesList((prevList) => prevList.filter(
-          repo => repo.id !== repository.id))
+          repo => repo.id !== updated.id))        
       }
-      
+        
+      setRepositoryList((prevList) => 
+        prevList.map((r) => r.id === updated.id ? updated : r)
+      )
     } catch (error) {
       console.error("Failed to create repository:", error);
     }

@@ -81,8 +81,11 @@ class API {
     return this._makeRequest("/repositorio/favoritos", "GET");
   }
 
-  public changeFavoriteStatus(status: boolean): Promise<RepositoryResponse> {
-    return this._makeRequest("/repositorio/favoritos", "PATCH", {
+  public changeFavoriteStatus(
+    id: string,
+    status: boolean
+  ): Promise<RepositoryResponse> {
+    return this._makeRequest(`/repositorio/${id}/favorito`, "PATCH", {
       isFavorite: status,
     });
   }

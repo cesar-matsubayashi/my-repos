@@ -10,6 +10,11 @@
   align-self: center;
 }
 
+.repository-card__header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .repository-card__name {
   font-family: "Roboto Slab", sans-serif;
   font-size: 26px;
