@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, type ReactNode } from "react";
-import type { RepositoryResponse, SearchResponse, GithubRepositoryResponse, BaseRepository } from "../utils/api";
+import type { RepositoryResponse, SearchResponse, GithubRepositoryResponse } from "../utils/api";
 import api from "../utils/api";
 
 interface RepositoryContextType {
