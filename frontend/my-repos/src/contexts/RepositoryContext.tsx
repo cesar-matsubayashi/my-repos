@@ -12,7 +12,7 @@ interface RepositoryContextType {
   addRepository: (repositoryUrl: string) => Promise<void>;
   myRepositories: () => Promise<void>;
   myFavorites: () => Promise<void>;
-  changeFavoriteStatus: (id: string) => Promise<void>;
+  changeFavoriteStatus: (repository: RepositoryResponse) => Promise<void>;
   searchRepositories: (keyword: string, page: number) => Promise<void>;
 }
 
@@ -38,7 +38,7 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
       console.error("Failed to create repository:", error);
     }
   };
-
+  
   const myRepositories = async (): Promise<void> => {
     try {
       const repositories: RepositoryResponse[] = await api.myRepositories();
@@ -47,19 +47,26 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
       console.error("Failed to create repository:", error);
     }
   };
-
-  const changeFavoriteStatus = async (id: string): Promise<void> => {
-    const repository = repositoryList.find((r) => r.id === id);
-    if (!repository) return;
+  
+  const changeFavoriteStatus = async (repository: RepositoryResponse): Promise<void> => {
+    let repo: RepositoryResponse = repository;
+    
+    if (!repositoryList.some((r) => r.repositoryUrl === repository.repositoryUrl)){
+      try{
+        repo = await api.create(repository.repositoryUrl);
+        setFavoritesList((prevList) => [...prevList, repo]);
+      } catch (error) {
+        console.error("Failed to create repository:", error);
+        return;
+      } 
+    };
     
     try {
       const updated: RepositoryResponse = 
-        await api.changeFavoriteStatus(id, !repository.isFavorite);
+        await api.changeFavoriteStatus(repo.id, !repo.isFavorite);
       
       if (updated.isFavorite){
         setFavoritesList((prevList) => [...prevList, updated]);
-
-        
       } else {
         setFavoritesList((prevList) => prevList.filter(
           repo => repo.id !== updated.id))        
@@ -69,7 +76,7 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
         prevList.map((r) => r.id === updated.id ? updated : r)
       )
     } catch (error) {
-      console.error("Failed to create repository:", error);
+      console.error("Failed to update favorite status repository:", error);
     }
   };
   

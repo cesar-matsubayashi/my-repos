@@ -13,7 +13,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
     const color: string = "#1c6b2b"
 
     const handleFavorite = () => {
-      changeFavoriteStatus(repository.id);
+      changeFavoriteStatus(repository);
     }
 
     return (
