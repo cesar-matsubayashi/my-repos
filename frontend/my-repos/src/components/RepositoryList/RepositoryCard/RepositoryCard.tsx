@@ -1,19 +1,25 @@
 import "./RepositoryCard.css";
-import type { RepositoryResponse } from "../../../utils/api";
+import type { GithubRepositoryResponse, RepositoryResponse } from "../../../utils/api";
 import { useRepository } from "../../../contexts/RepositoryContext";
 
 type RepositoryCardProps = {
-  repository: RepositoryResponse;
+  repository: (RepositoryResponse | GithubRepositoryResponse);
 };
 
 export default function RepositoryCard({ repository }: RepositoryCardProps) {
-  const { changeFavoriteStatus } = useRepository();
+  const { changeFavoriteStatus, createAndFavorite } = useRepository();
   
   const favoriteIcon = (filled: boolean) => {
     const color: string = "#1c6b2b"
 
     const handleFavorite = () => {
-      changeFavoriteStatus(repository.id);
+      const isStored = 'id' in repository;
+
+      if (isStored){
+        changeFavoriteStatus(repository);
+      } else {
+        createAndFavorite(repository);
+      };
     }
 
     return (
@@ -36,7 +42,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
   }
 
   return (
-    <div className="repository-card" id={repository.id}>
+    <div className="repository-card">
       <div className="repository-card__header">
         <h2 className="repository-card__name">{repository.name}</h2>
         {favoriteIcon(repository.isFavorite)}

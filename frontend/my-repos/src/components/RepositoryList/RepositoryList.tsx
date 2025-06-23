@@ -2,11 +2,11 @@ import './RepositoryList.css'
 import RepositoryCard from './RepositoryCard/RepositoryCard';
 import { useState } from 'react';
 import Pagination from './Pagination/Pagination';
-import type { RepositoryResponse } from '../../utils/api';
+import type { GithubRepositoryResponse, RepositoryResponse } from '../../utils/api';
 import { useRepository } from '../../contexts/RepositoryContext';
 
 interface RepositoryListProps {
-  repositories: RepositoryResponse[];
+  repositories: (RepositoryResponse | GithubRepositoryResponse)[];
   searchPage?: boolean;
   totalSearchCount?: number
 }
@@ -21,7 +21,7 @@ export default function RepositoryList({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const { searchRepositories, searchValue } = useRepository();
   
-  let currentItems: RepositoryResponse[]; 
+  let currentItems: (RepositoryResponse | GithubRepositoryResponse)[]; 
   let totalPages: number;
   if(searchPage){
     currentItems = repositories;
@@ -44,7 +44,7 @@ export default function RepositoryList({
     <section className='repositories'>
       <div className='repositories__card'>
         {currentItems.map((repository) => (
-          <RepositoryCard key={repository.id} repository={repository}/>
+          <RepositoryCard key={repository.githubId} repository={repository}/>
         ))}
       </div>
       <Pagination

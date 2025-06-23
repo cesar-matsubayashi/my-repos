@@ -10,8 +10,8 @@ interface APIError {
   message: string;
 }
 
-export interface RepositoryResponse {
-  id: string;
+export interface BaseRepository {
+  githubId: number;
   name: string;
   description: string;
   language: string;
@@ -20,6 +20,12 @@ export interface RepositoryResponse {
   repositoryUrl: string;
   isFavorite: boolean;
 }
+
+export interface RepositoryResponse extends BaseRepository {
+  id: string;
+}
+
+export interface GithubRepositoryResponse extends BaseRepository {}
 
 export interface SearchResponse {
   totalCount: number;
@@ -73,7 +79,11 @@ class API {
     return this._makeRequest("/repositorio", "POST", { repositoryUrl });
   }
 
-  public myRepositories(): Promise<RepositoryResponse[]> {
+  public repositories(): Promise<RepositoryResponse[]> {
+    return this._makeRequest("/repositorio", "GET");
+  }
+
+  public myRepositories(): Promise<GithubRepositoryResponse[]> {
     return this._makeRequest("/repositorio/meus", "GET");
   }
 
