@@ -7,7 +7,7 @@ type RepositoryCardProps = {
 };
 
 export default function RepositoryCard({ repository }: RepositoryCardProps) {
-  const { changeFavoriteStatus, createAndFavorite } = useRepository();
+  const { changeFavoriteStatus, changeGithubResponseFavorite } = useRepository();
   
   const favoriteIcon = (filled: boolean) => {
     const color: string = "#1c6b2b"
@@ -18,7 +18,7 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
       if (isStored){
         changeFavoriteStatus(repository);
       } else {
-        createAndFavorite(repository);
+        changeGithubResponseFavorite(repository);
       };
     }
 

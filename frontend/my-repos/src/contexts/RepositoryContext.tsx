@@ -14,7 +14,7 @@ interface RepositoryContextType {
   myRepositories: () => Promise<void>;
   myFavorites: () => Promise<void>;
   changeFavoriteStatus: (repository: RepositoryResponse) => Promise<void>;
-  createAndFavorite: (repository: GithubRepositoryResponse) => Promise<void>;
+  changeGithubResponseFavorite: (repository: GithubRepositoryResponse) => Promise<void>;
   searchRepositories: (keyword: string, page: number) => Promise<void>;
 }
 
@@ -80,10 +80,15 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     }
   };
 
-  const createAndFavorite = async (repository: GithubRepositoryResponse): Promise<void> => {
+  const changeGithubResponseFavorite = async (repository: GithubRepositoryResponse): Promise<void> => {
     try{
-      const newRepo = await api.create(repository.repositoryUrl);
-      changeFavoriteStatus(newRepo);
+      let repo = repositoryList.find((r) => r.repositoryUrl == repository.repositoryUrl); 
+      
+      if(!repo){
+        repo = await api.create(repository.repositoryUrl);
+      }
+
+      changeFavoriteStatus(repo);
 
       repository.isFavorite = !repository.isFavorite;
       setGithubRepositoryList((prevList) => 
@@ -123,7 +128,7 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
       favoritesList, 
       myFavorites,
       changeFavoriteStatus,
-      createAndFavorite,
+      changeGithubResponseFavorite,
       searchList,
       searchRepositories,
       searchValue, 
