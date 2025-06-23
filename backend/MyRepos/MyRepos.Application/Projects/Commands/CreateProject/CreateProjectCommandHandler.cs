@@ -2,7 +2,7 @@
 using MediatR;
 using MyRepos.Application.Common.Persistence;
 using MyRepos.Application.Common.Services;
-using MyRepos.Domain.Project;
+using MyRepos.Domain.ProjectAggregate;
 
 namespace MyRepos.Application.Projects.Commands.CreateProject
 {
@@ -24,7 +24,7 @@ namespace MyRepos.Application.Projects.Commands.CreateProject
             CreateProjectCommand request, 
             CancellationToken cancellationToken)
         {
-            var metadata = await _githubService.GetRepositoryMetadata(request.RepositoryUrl);
+            var metadata = await _githubService.GetGithubRepository(request.RepositoryUrl);
 
             var project = Project.Create(
                 metadata.Name,

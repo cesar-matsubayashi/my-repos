@@ -7,7 +7,6 @@ using MyRepos.Application.Projects.Commands.DeleteProject;
 using MyRepos.Application.Projects.Commands.UpdateProject;
 using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Application.Projects.Queries.ListFavorites;
-using MyRepos.Application.Projects.Queries.ListMyProjects;
 using MyRepos.Application.Projects.Queries.ListProject;
 using MyRepos.Application.Projects.Queries.SearchAllProjects;
 using MyRepos.Contracts.Project;
@@ -88,17 +87,6 @@ namespace MyRepos.Api.Controllers
 
             return deleteProjectCommand.Match(
                 _ => NoContent(),
-                errors => Problem(errors));
-        }
-
-        [HttpGet("meus")]
-        public async Task<IActionResult> ListMyProjects()
-        {
-            var query = new ListMyProjectsQuery(GITHUB_USER);
-            var listMyProjectsQuery = await _mediator.Send(query);
-
-            return listMyProjectsQuery.Match(
-                projects => Ok(_mapper.Map<List<ProjectResponse>>(projects)),
                 errors => Problem(errors));
         }
 

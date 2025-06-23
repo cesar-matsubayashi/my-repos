@@ -7,8 +7,8 @@ using MyRepos.Application.Projects.Queries.GetProjectById;
 using MyRepos.Application.Projects.Queries.SearchAllProjects;
 using MyRepos.Contracts.Project;
 using MyRepos.Contracts.Project.Favorite;
-using MyRepos.Domain.Project;
-using MyRepos.Domain.Project.ValueObjects;
+using MyRepos.Domain.ProjectAggregate;
+using MyRepos.Domain.ProjectAggregate.ValueObjects;
 
 namespace MyRepos.Api.Common.Mapping
 {

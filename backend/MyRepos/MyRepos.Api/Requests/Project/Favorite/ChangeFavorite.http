@@ -1,5 +1,5 @@
 @host = https://localhost:7174
-@id = e46aaee4-c010-4cb8-9599-7614ea685e55
+@id = d22fb721-106c-4e83-ad81-20cd8884a831
 
 PATCH {{host}}/repositorio/{{id}}/favorito
 Content-Type: application/json

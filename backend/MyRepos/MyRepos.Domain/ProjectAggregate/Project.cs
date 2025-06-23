@@ -1,7 +1,7 @@
 ﻿using MyRepos.Domain.Common.Models;
-using MyRepos.Domain.Project.ValueObjects;
+using MyRepos.Domain.ProjectAggregate.ValueObjects;
 
-namespace MyRepos.Domain.Project
+namespace MyRepos.Domain.ProjectAggregate
 {
     public sealed class Project : AggregateRoot<ProjectId>
     {

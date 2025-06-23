@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyRepos.Application.Common.Persistence;
-using MyRepos.Domain.Project;
-using MyRepos.Domain.Project.ValueObjects;
+using MyRepos.Domain.ProjectAggregate;
+using MyRepos.Domain.ProjectAggregate.ValueObjects;
 
 namespace MyRepos.Infrastructure.Persistence.Repositories
 {

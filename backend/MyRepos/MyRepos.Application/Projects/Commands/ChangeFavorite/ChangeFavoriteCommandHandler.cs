@@ -2,7 +2,7 @@
 using MediatR;
 using MyRepos.Application.Common.Persistence;
 using MyRepos.Domain.Common.Errors;
-using MyRepos.Domain.Project;
+using MyRepos.Domain.ProjectAggregate;
 
 namespace MyRepos.Application.Projects.Commands.ChangeFavorite
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyRepos.Domain.Project;
+using MyRepos.Domain.ProjectAggregate;
 
 namespace MyRepos.Infrastructure.Persistence
 {

@@ -1,5 +1,5 @@
 ﻿using Mapster;
-using MyRepos.Contracts.RepositoryMetadata;
+using MyRepos.Contracts.GithubRepository;
 using MyRepos.Contracts.SearchResult;
 using MyRepos.Domain.Search;
 

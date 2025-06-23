@@ -1,6 +1,6 @@
 ﻿using MyRepos.Domain.Common.Models;
 
-namespace MyRepos.Domain.Project.ValueObjects
+namespace MyRepos.Domain.ProjectAggregate.ValueObjects
 {
     public sealed class ProjectId : ValueObject
     {

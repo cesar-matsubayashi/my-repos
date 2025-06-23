@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using MyRepos.Application.Common.Services;
-using MyRepos.Domain.Project;
+using MyRepos.Domain.ProjectAggregate;
 using MyRepos.Domain.Search;
 
 namespace MyRepos.Application.Projects.Queries.SearchAllProjects
@@ -20,7 +20,7 @@ namespace MyRepos.Application.Projects.Queries.SearchAllProjects
             SearchAllProjectsQuery request, 
             CancellationToken cancellationToken)
         {
-            var metadata = await _githubService.GetAllRepositoryMetadataByName(
+            var metadata = await _githubService.GetAllGithubRepositoryByName(
                 request.Keyword,
                 request.Page);
 

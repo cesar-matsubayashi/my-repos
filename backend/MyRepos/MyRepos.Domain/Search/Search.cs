@@ -1,15 +1,13 @@
-﻿using MyRepos.Domain.Project;
-
-namespace MyRepos.Domain.Search
+﻿namespace MyRepos.Domain.Search
 {
     public sealed class SearchResult
     {
-        private readonly List<MyRepos.Domain.Project.Project> _projects = new();
+        private readonly List<ProjectAggregate.Project> _projects = new();
         public int TotalCount { get; set; }
-        public IReadOnlyList<MyRepos.Domain.Project.Project> Projects => _projects.AsReadOnly();
+        public IReadOnlyList<ProjectAggregate.Project> Projects => _projects.AsReadOnly();
         private SearchResult(
             int totalCount,
-            List<MyRepos.Domain.Project.Project> projects)
+            List<ProjectAggregate.Project> projects)
         {
             TotalCount = totalCount;
             _projects = projects;
@@ -17,7 +15,7 @@ namespace MyRepos.Domain.Search
 
         public static SearchResult Create(
             int totalCount,
-            List<MyRepos.Domain.Project.Project> projects)
+            List<ProjectAggregate.Project> projects)
         {
             var search = new SearchResult(totalCount, projects);
             return search;
