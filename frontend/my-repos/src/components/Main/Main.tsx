@@ -2,9 +2,14 @@ import './Main.css'
 import AddForm from "./AddForm/AddForm";
 import { useRepository } from '../../contexts/RepositoryContext';
 import RepositoryList from '../RepositoryList/RepositoryList';
+import { useEffect } from 'react';
 
 export default function Main() {
-  const { repositoryList } = useRepository();
+  const { repositoryList, getRepositories} = useRepository();
+
+  useEffect(() => {
+    getRepositories();
+  },[]);
 
   return (
     <main className="main">
