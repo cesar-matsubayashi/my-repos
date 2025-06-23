@@ -4,7 +4,7 @@ import "./MyRepositories.css";
 import { useRepository } from "../../contexts/RepositoryContext";
 
 export default function MyRepositories() {
-  const { myRepositories, myRepositoryList } = useRepository();
+  const { myRepositories, githubRepositoryList } = useRepository();
 
   useEffect(() => {
     myRepositories();
@@ -12,7 +12,7 @@ export default function MyRepositories() {
   
   return (
     <section className="my-repositories">
-      <RepositoryList repositories={myRepositoryList}/>
+      <RepositoryList repositories={githubRepositoryList}/>
     </section>
   );
 }

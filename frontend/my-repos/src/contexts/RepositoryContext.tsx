@@ -1,18 +1,20 @@
 import { createContext, useState, useContext, type ReactNode } from "react";
-import type { RepositoryResponse, SearchResponse } from "../utils/api";
+import type { RepositoryResponse, SearchResponse, GithubRepositoryResponse, BaseRepository } from "../utils/api";
 import api from "../utils/api";
 
 interface RepositoryContextType {
   repositoryList: RepositoryResponse[];
-  myRepositoryList: RepositoryResponse[];
+  githubRepositoryList: GithubRepositoryResponse[];
   favoritesList: RepositoryResponse[];
   searchList: SearchResponse;
   searchValue: string, 
   setSearchValue: (value: string) => void;
   addRepository: (repositoryUrl: string) => Promise<void>;
+  getRepositories: () => Promise<void>;
   myRepositories: () => Promise<void>;
   myFavorites: () => Promise<void>;
   changeFavoriteStatus: (repository: RepositoryResponse) => Promise<void>;
+  createAndFavorite: (repository: GithubRepositoryResponse) => Promise<void>;
   searchRepositories: (keyword: string, page: number) => Promise<void>;
 }
 
@@ -22,13 +24,23 @@ const RepositoryContext = createContext<RepositoryContextType | undefined>(
 
 export default function RepositoryProvider({ children }: { children: ReactNode }) {
   const [repositoryList, setRepositoryList] = useState<RepositoryResponse[]>([]);
-  const [myRepositoryList, setMyRepositoryList] = useState<RepositoryResponse[]>([]);
   const [favoritesList, setFavoritesList] = useState<RepositoryResponse[]>([]);
   const [searchList, setSearchList] = useState<SearchResponse>({
       totalCount: 0,
       projects: [],
     });
+  const [githubRepositoryList, setGithubRepositoryList] = 
+    useState<GithubRepositoryResponse[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+
+  const getRepositories = async (): Promise<void> => {
+    try {
+      const repositories: RepositoryResponse[] = await api.repositories();
+      setRepositoryList(repositories);
+    } catch (error) {
+      console.error("Failed to get repositories:", error);
+    }
+  }
 
   const addRepository = async (repositoryUrl: string): Promise<void> => {
     try {
@@ -41,29 +53,17 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
   
   const myRepositories = async (): Promise<void> => {
     try {
-      const repositories: RepositoryResponse[] = await api.myRepositories();
-      setMyRepositoryList(repositories);
+      const repositories: GithubRepositoryResponse[] = await api.myRepositories();
+      setGithubRepositoryList(repositories);
     } catch (error) {
-      console.error("Failed to create repository:", error);
+      console.error("Failed to get user repositories:", error);
     }
   };
   
   const changeFavoriteStatus = async (repository: RepositoryResponse): Promise<void> => {
-    let repo: RepositoryResponse = repository;
-    
-    if (!repositoryList.some((r) => r.repositoryUrl === repository.repositoryUrl)){
-      try{
-        repo = await api.create(repository.repositoryUrl);
-        setFavoritesList((prevList) => [...prevList, repo]);
-      } catch (error) {
-        console.error("Failed to create repository:", error);
-        return;
-      } 
-    };
-    
     try {
       const updated: RepositoryResponse = 
-        await api.changeFavoriteStatus(repo.id, !repo.isFavorite);
+        await api.changeFavoriteStatus(repository.id, !repository.isFavorite);
       
       if (updated.isFavorite){
         setFavoritesList((prevList) => [...prevList, updated]);
@@ -78,6 +78,21 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     } catch (error) {
       console.error("Failed to update favorite status repository:", error);
     }
+  };
+
+  const createAndFavorite = async (repository: GithubRepositoryResponse): Promise<void> => {
+    try{
+      const newRepo = await api.create(repository.repositoryUrl);
+      changeFavoriteStatus(newRepo);
+
+      repository.isFavorite = !repository.isFavorite;
+      setGithubRepositoryList((prevList) => 
+      prevList.map((r) => r.repositoryUrl === repository.repositoryUrl ? repository : r));
+
+    } catch (error) {
+      console.error("Failed to favorite repository:", error);
+      return;
+    } 
   };
   
   const myFavorites = async (): Promise<void> => {
@@ -103,15 +118,17 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     <RepositoryContext.Provider value={{ 
       repositoryList, 
       addRepository, 
-      myRepositoryList, 
+      githubRepositoryList, 
       myRepositories, 
       favoritesList, 
       myFavorites,
       changeFavoriteStatus,
+      createAndFavorite,
       searchList,
       searchRepositories,
       searchValue, 
-      setSearchValue }}>
+      setSearchValue,
+      getRepositories }}>
       {children}
     </RepositoryContext.Provider>
   );
