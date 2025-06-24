@@ -1,5 +1,6 @@
 ﻿using MyRepos.Application.Common.Services;
 using MyRepos.Contracts.GithubRepository;
+using MyRepos.Contracts.GithubSearch;
 using System.Text.Json;
 
 namespace MyRepos.Infrastructure.Services.Github
@@ -67,7 +68,7 @@ namespace MyRepos.Infrastructure.Services.Github
             }
         }
 
-        public async Task<GithubSearchResponse> GetAllGithubRepositoryByName(string name, int page = 1)
+        public async Task<RawGithubSearchResponse> GetAllGithubRepositoryByName(string name, int page = 1)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace MyRepos.Infrastructure.Services.Github
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<GithubSearchResponse>(json, _jsonOptions);
+                return JsonSerializer.Deserialize<RawGithubSearchResponse>(json, _jsonOptions);
             }
             catch (HttpRequestException ex)
             {

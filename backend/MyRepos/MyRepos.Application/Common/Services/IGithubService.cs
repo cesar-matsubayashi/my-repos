@@ -1,4 +1,5 @@
 ﻿using MyRepos.Contracts.GithubRepository;
+using MyRepos.Contracts.GithubSearch;
 
 namespace MyRepos.Application.Common.Services
 {
@@ -6,6 +7,6 @@ namespace MyRepos.Application.Common.Services
     {
         Task<RawGithubRepositoryResponse> GetGithubRepository(string url);
         Task<List<RawGithubRepositoryResponse>> GetAllGithubRepositoryByUser(string user);
-        Task<GithubSearchResponse> GetAllGithubRepositoryByName(string name, int page);
+        Task<RawGithubSearchResponse> GetAllGithubRepositoryByName(string name, int page);
     }
 }

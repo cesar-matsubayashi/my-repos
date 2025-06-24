@@ -1,6 +1,5 @@
 ﻿using MyRepos.Domain.Common.Models;
 using MyRepos.Domain.GithubRepositoryAggregate.ValueObjects;
-using System.Numerics;
 
 namespace MyRepos.Domain.GithubRepositoryAggregate
 {
