@@ -2,6 +2,7 @@
 {
     public record ProjectResponse(
         string Id,
+        int GithubId,
         string Name,
         string Description,
         string Language,

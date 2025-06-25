@@ -6,6 +6,7 @@ namespace MyRepos.Domain.ProjectAggregate
     public sealed class Project : AggregateRoot<ProjectId>
     {
         public string Name { get; private set; }
+        public int GithubId { get; private set; }
         public string? Description { get; private set; }
         public string? Language { get; private set; }
         public DateTimeOffset UpdatedDateTime { get; private set; }
@@ -15,6 +16,7 @@ namespace MyRepos.Domain.ProjectAggregate
 
         private Project(
             ProjectId repositoryId,
+            int githubId,
             string name, 
             string description, 
             string language, 
@@ -23,6 +25,7 @@ namespace MyRepos.Domain.ProjectAggregate
             string repositoryUrl)
             : base(repositoryId)
         {
+            GithubId = githubId;
             Name = name;
             Description = description;
             Language = language;
@@ -32,6 +35,7 @@ namespace MyRepos.Domain.ProjectAggregate
         }
 
         public static Project Create(
+            int githubId,
             string name,
             string description,
             string language,
@@ -41,6 +45,7 @@ namespace MyRepos.Domain.ProjectAggregate
         {
             var repository = new Project(
                 ProjectId.CreateUnique(),
+                githubId,
                 name,
                 description,
                 language,

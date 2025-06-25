@@ -27,6 +27,7 @@ namespace MyRepos.Application.Projects.Commands.CreateProject
             var metadata = await _githubService.GetGithubRepository(request.RepositoryUrl);
 
             var project = Project.Create(
+                metadata.Id,
                 metadata.Name,
                 metadata.Description,
                 metadata.Language,
