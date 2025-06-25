@@ -29,7 +29,7 @@ export interface GithubRepositoryResponse extends BaseRepository {}
 
 export interface SearchResponse {
   totalCount: number;
-  projects: RepositoryResponse[];
+  repositories: GithubRepositoryResponse[];
 }
 
 class API {

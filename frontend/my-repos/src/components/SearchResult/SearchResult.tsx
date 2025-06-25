@@ -8,7 +8,7 @@ export default function SearchResult() {
   return (
     <section className="search-result">
       <RepositoryList 
-        repositories={searchList.projects} 
+        repositories={searchList.repositories} 
         searchPage={true} 
         totalSearchCount={searchList.totalCount}/>
     </section>

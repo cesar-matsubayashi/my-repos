@@ -27,7 +27,7 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
   const [favoritesList, setFavoritesList] = useState<RepositoryResponse[]>([]);
   const [searchList, setSearchList] = useState<SearchResponse>({
       totalCount: 0,
-      projects: [],
+      repositories: [],
     });
   const [githubRepositoryList, setGithubRepositoryList] = 
     useState<GithubRepositoryResponse[]>([]);
@@ -113,7 +113,6 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     try {
       const repositories: SearchResponse = await api.searchRepositories(keyword, page);
       setSearchList(repositories);
-      console.log(repositories);
     } catch (error) {
       console.error("Failed to create repository:", error);
     }
