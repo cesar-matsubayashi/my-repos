@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
-using MyRepos.Domain.Project;
+using MyRepos.Domain.ProjectAggregate;
 
 namespace MyRepos.Application.Projects.Queries.ListFavorites
 {

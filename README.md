@@ -61,3 +61,6 @@ dotnet run
 - Autenticação e cadastro
 - Salvamento persistente de dados
 - Mostrar README na página de detalhes
+- Mostar contribuidores
+- Autenticação API GitHub
+- Ao carregar, atualizar infos de repositórios salvos

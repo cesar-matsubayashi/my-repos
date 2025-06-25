@@ -1,11 +1,12 @@
-﻿using MyRepos.Contracts.RepositoryMetadata;
+﻿using MyRepos.Contracts.GithubRepository;
+using MyRepos.Contracts.GithubSearch;
 
 namespace MyRepos.Application.Common.Services
 {
     public interface IGithubService
     {
-        Task<RepositoryMetadata> GetRepositoryMetadata(string url);
-        Task<List<RepositoryMetadata>> GetAllRepositoryMetadataByUser(string user);
-        Task<GithubSearchResponse> GetAllRepositoryMetadataByName(string name, int page);
+        Task<RawGithubRepositoryResponse> GetGithubRepository(string url);
+        Task<List<RawGithubRepositoryResponse>> GetAllGithubRepositoryByUser(string user);
+        Task<RawGithubSearchResponse> GetAllGithubRepositoryByName(string name, int page);
     }
 }

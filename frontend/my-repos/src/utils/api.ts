@@ -10,8 +10,8 @@ interface APIError {
   message: string;
 }
 
-export interface RepositoryResponse {
-  id: string;
+export interface BaseRepository {
+  githubId: number;
   name: string;
   description: string;
   language: string;
@@ -21,9 +21,15 @@ export interface RepositoryResponse {
   isFavorite: boolean;
 }
 
+export interface RepositoryResponse extends BaseRepository {
+  id: string;
+}
+
+export interface GithubRepositoryResponse extends BaseRepository {}
+
 export interface SearchResponse {
   totalCount: number;
-  projects: RepositoryResponse[];
+  repositories: GithubRepositoryResponse[];
 }
 
 class API {
@@ -73,7 +79,11 @@ class API {
     return this._makeRequest("/repositorio", "POST", { repositoryUrl });
   }
 
-  public myRepositories(): Promise<RepositoryResponse[]> {
+  public repositories(): Promise<RepositoryResponse[]> {
+    return this._makeRequest("/repositorio", "GET");
+  }
+
+  public myRepositories(): Promise<GithubRepositoryResponse[]> {
     return this._makeRequest("/repositorio/meus", "GET");
   }
 
@@ -81,8 +91,11 @@ class API {
     return this._makeRequest("/repositorio/favoritos", "GET");
   }
 
-  public changeFavoriteStatus(status: boolean): Promise<RepositoryResponse> {
-    return this._makeRequest("/repositorio/favoritos", "PATCH", {
+  public changeFavoriteStatus(
+    id: string,
+    status: boolean
+  ): Promise<RepositoryResponse> {
+    return this._makeRequest(`/repositorio/${id}/favorito`, "PATCH", {
       isFavorite: status,
     });
   }

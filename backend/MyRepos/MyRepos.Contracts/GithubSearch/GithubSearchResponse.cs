@@ -1,7 +1,10 @@
-﻿namespace MyRepos.Contracts.Project
+﻿namespace MyRepos.Contracts.GithubSearch
 {
-    public record ProjectResponse(
-        string Id,
+    public record GithubSearchResponse(
+        int TotalCount,
+        List<SearchRepository> Repositories);
+
+    public record SearchRepository(
         int GithubId,
         string Name,
         string Description,

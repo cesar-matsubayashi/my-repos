@@ -1,5 +1,6 @@
 ﻿using MyRepos.Application.Common.Services;
-using MyRepos.Contracts.RepositoryMetadata;
+using MyRepos.Contracts.GithubRepository;
+using MyRepos.Contracts.GithubSearch;
 using System.Text.Json;
 
 namespace MyRepos.Infrastructure.Services.Github
@@ -34,7 +35,7 @@ namespace MyRepos.Infrastructure.Services.Github
             throw new ArgumentException("Invalid GitHub repository URL.");
         }
 
-        public async Task<RepositoryMetadata> GetRepositoryMetadata(string url)
+        public async Task<RawGithubRepositoryResponse> GetGithubRepository(string url)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace MyRepos.Infrastructure.Services.Github
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<RepositoryMetadata>(json, _jsonOptions);
+                return JsonSerializer.Deserialize<RawGithubRepositoryResponse>(json, _jsonOptions);
             }
             catch (HttpRequestException ex)
             {
@@ -51,7 +52,7 @@ namespace MyRepos.Infrastructure.Services.Github
             }
         }
 
-        public async Task<List<RepositoryMetadata>> GetAllRepositoryMetadataByUser(string user)
+        public async Task<List<RawGithubRepositoryResponse>> GetAllGithubRepositoryByUser(string user)
         {
             try
             {
@@ -59,7 +60,7 @@ namespace MyRepos.Infrastructure.Services.Github
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<RepositoryMetadata>>(json, _jsonOptions);
+                return JsonSerializer.Deserialize<List<RawGithubRepositoryResponse>>(json, _jsonOptions);
             }
             catch (HttpRequestException ex)
             {
@@ -67,7 +68,7 @@ namespace MyRepos.Infrastructure.Services.Github
             }
         }
 
-        public async Task<GithubSearchResponse> GetAllRepositoryMetadataByName(string name, int page = 1)
+        public async Task<RawGithubSearchResponse> GetAllGithubRepositoryByName(string name, int page = 1)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace MyRepos.Infrastructure.Services.Github
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<GithubSearchResponse>(json, _jsonOptions);
+                return JsonSerializer.Deserialize<RawGithubSearchResponse>(json, _jsonOptions);
             }
             catch (HttpRequestException ex)
             {

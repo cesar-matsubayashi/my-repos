@@ -1,5 +1,5 @@
-﻿using MyRepos.Domain.Project;
-using MyRepos.Domain.Project.ValueObjects;
+﻿using MyRepos.Domain.ProjectAggregate;
+using MyRepos.Domain.ProjectAggregate.ValueObjects;
 
 namespace MyRepos.Application.Common.Persistence
 {

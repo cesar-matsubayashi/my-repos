@@ -1,6 +1,7 @@
-﻿namespace MyRepos.Contracts.RepositoryMetadata
+﻿namespace MyRepos.Contracts.GithubRepository
 {
-    public record RepositoryMetadata(
+    public record RawGithubRepositoryResponse(
+        int Id,
         string Name,
         string Description,
         string Language,

@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
-using MyRepos.Domain.Project.ValueObjects;
+using MyRepos.Domain.ProjectAggregate.ValueObjects;
 
 namespace MyRepos.Application.Projects.Commands.DeleteProject
 {

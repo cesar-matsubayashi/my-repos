@@ -1,10 +1,11 @@
-﻿namespace MyRepos.Contracts.RepositoryMetadata
+﻿namespace MyRepos.Contracts.GithubSearch
 {
-    public record GithubSearchResponse(
+    public record RawGithubSearchResponse(
         int Total_Count,
-        List<GithubSearchRepositoryMetadata> Items);
+        List<RawGithubSearchRepositoryResponse> Items);
 
-    public record GithubSearchRepositoryMetadata(
+    public record RawGithubSearchRepositoryResponse(
+        int Id,
         string Name,
         string Description,
         string Language,

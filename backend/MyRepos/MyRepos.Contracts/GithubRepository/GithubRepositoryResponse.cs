@@ -1,7 +1,7 @@
-﻿namespace MyRepos.Contracts.Project
+﻿
+namespace MyRepos.Contracts.GithubRepository
 {
-    public record ProjectResponse(
-        string Id,
+    public record GithubRepositoryResponse(
         int GithubId,
         string Name,
         string Description,
