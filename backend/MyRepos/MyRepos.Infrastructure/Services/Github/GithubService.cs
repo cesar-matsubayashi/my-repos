@@ -87,5 +87,22 @@ namespace MyRepos.Infrastructure.Services.Github
                 throw new Exception($"Failed to get repository metadata: {ex.Message}", ex);
             }
         }
+
+        public async Task<RawGithubReadmeResponse> GetRepositoryReadme(string url)
+        {
+            try
+            {
+                var (owner, repo) = ParseGithubUrl(url);
+                var response = await _httpClient.GetAsync($"{BaseUrl}/repos/{owner}/{repo}/readme");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<RawGithubReadmeResponse>(json, _jsonOptions);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Failed to get repository readme: {ex.Message}", ex);
+            }
+        }
     }
 }
