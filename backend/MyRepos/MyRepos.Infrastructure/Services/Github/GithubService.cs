@@ -88,12 +88,11 @@ namespace MyRepos.Infrastructure.Services.Github
             }
         }
 
-        public async Task<RawGithubReadmeResponse> GetRepositoryReadme(string url)
+        public async Task<RawGithubReadmeResponse> GetRepositoryReadme(string owner, string repositoryName)
         {
             try
             {
-                var (owner, repo) = ParseGithubUrl(url);
-                var response = await _httpClient.GetAsync($"{BaseUrl}/repos/{owner}/{repo}/readme");
+                var response = await _httpClient.GetAsync($"{BaseUrl}/repos/{owner}/{repositoryName}/readme");
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();

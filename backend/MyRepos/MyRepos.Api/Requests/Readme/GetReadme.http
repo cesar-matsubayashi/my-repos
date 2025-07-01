@@ -1,0 +1,6 @@
+@host = https://localhost:7174
+@owner = cesar-matsubayashi
+@repositoryName = my-repos
+
+GET {{host}}/repositorio/{{owner}}/{{repositoryName}}/readme
+Content-Type: application/json
