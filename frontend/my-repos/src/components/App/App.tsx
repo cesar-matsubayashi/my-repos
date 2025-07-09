@@ -6,11 +6,16 @@ import RepositoryProvider from '../../contexts/RepositoryContext';
 import Favorites from '../Favorites/Favorites';
 import MyRepositories from '../MyRepositories/MyRepositories';
 import SearchResult from '../SearchResult/SearchResult';
+import Modal from '../Modal/Modal';
+import { useState } from 'react';
 
 function App() {
+  const [open, setOpen] = useState(false);
+
   return (
     <RepositoryProvider>
       <div className="page">
+        <button onClick={() => setOpen(true)}>Open Modal</button>
         <Routes>
           <Route path="/" element={ <Layout /> }>
             <Route index element={ <Main /> } />
@@ -20,6 +25,9 @@ function App() {
           </Route>
         </Routes>
       </div>
+      <Modal isOpen={open} onClose={() => setOpen(false)}>
+        <h2>Hello</h2>
+      </Modal>
     </RepositoryProvider>
   )
 }
