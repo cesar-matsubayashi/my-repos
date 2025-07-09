@@ -1,6 +1,7 @@
 import "./RepositoryCard.css";
 import type { GithubRepositoryResponse, RepositoryResponse } from "../../../utils/api";
 import { useRepository } from "../../../contexts/RepositoryContext";
+import { useModal } from "../../../contexts/ModalContext";
 
 type RepositoryCardProps = {
   repository: (RepositoryResponse | GithubRepositoryResponse);
@@ -8,6 +9,7 @@ type RepositoryCardProps = {
 
 export default function RepositoryCard({ repository }: RepositoryCardProps) {
   const { changeFavoriteStatus, changeGithubResponseFavorite } = useRepository();
+  const { setOpen, setRepository } = useModal();
   
   const favoriteIcon = (filled: boolean) => {
     const color: string = "#1c6b2b"
@@ -41,8 +43,13 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
     );
   }
 
+   const handleClick = () => {
+      setRepository(repository);
+      setOpen(true);
+    }
+
   return (
-    <div className="repository-card">
+    <div className="repository-card" onClick={handleClick}>
       <div className="repository-card__header">
         <h2 className="repository-card__name">{repository.name}</h2>
         {favoriteIcon(repository.isFavorite)}

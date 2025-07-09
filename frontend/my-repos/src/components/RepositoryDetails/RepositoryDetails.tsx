@@ -1,16 +1,10 @@
-const repository =  {
-  id: "69151732-ea8d-4715-952e-c89e4930f6d4",
-  githubId: 1004628223,
-  name: "my-repos",
-  description: "Allows you to create a catalog of your projects and mark repositories as favorites",
-  language: "C#",
-  updatedDateTime: "2025-06-30T22:51:58+00:00",
-  owner: "cesar-matsubayashi",
-  repositoryUrl: "https://github.com/cesar-matsubayashi/my-repos",
-  isFavorite: false
-}
+import './RepositoryDetails.css'
+import { useModal } from "../../contexts/ModalContext";
 
 export default function RepositoryDetails() {
+  const { repository } = useModal()
+ 
+  if (!repository) return;
 
   return (
     <div className="details">
@@ -20,6 +14,13 @@ export default function RepositoryDetails() {
           <h2 className="details__name">{repository.name}</h2>
         </div>
         <p className="details__description">{repository.description}</p>
+        <p className="details__updated">
+          {new Date(repository.updatedDateTime).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </p>
         <div className="details__bottom">
           <div className="details__language">
             {repository.language}
