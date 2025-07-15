@@ -29,9 +29,6 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
         role="dialog"
         aria-modal="true"
       >
-        <button className="modal__close" onClick={onClose}>
-          &times;
-        </button>
         {children}
       </div>
     </div>

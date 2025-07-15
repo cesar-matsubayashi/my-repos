@@ -13,21 +13,11 @@
 
 .modal__content {
   background: white;
-  padding: 2rem;
+  /* padding: 2rem; */
   border-radius: 8px;
   position: relative;
   min-width: 300px;
-  max-width: 600px;
+  max-width: 70vw;
   max-height: 90vh;
   overflow-y: auto;
-}
-
-.modal__close {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
 }
