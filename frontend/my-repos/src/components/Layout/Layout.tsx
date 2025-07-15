@@ -13,7 +13,6 @@ export default function Layout() {
       <Header />
       <Outlet />
       <Footer />
-      <button onClick={() => setOpen(true)}>Open Modal</button>
       <Modal isOpen={open} onClose={() => setOpen(false)}>
         <RepositoryDetails />
       </Modal>
