@@ -11,7 +11,7 @@ export default function RepositoryDetails() {
   
   useEffect(() => {
     getReadme(repository.owner, repository.name);
-  })
+  }, [])
 
   const binary = Uint8Array.from(atob(readme.content), c => c.charCodeAt(0));
   const decoded = new TextDecoder().decode(binary);
