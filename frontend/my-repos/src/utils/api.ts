@@ -27,6 +27,14 @@ export interface RepositoryResponse extends BaseRepository {
 
 export interface GithubRepositoryResponse extends BaseRepository {}
 
+export interface ReadmeResponse {
+  content: string;
+  encoding: string;
+  sha: string;
+  url: string;
+  downloadUrl: string;
+}
+
 export interface SearchResponse {
   totalCount: number;
   repositories: GithubRepositoryResponse[];
@@ -108,6 +116,10 @@ class API {
       `/repositorio/search?q=${keyword}&page=${page}`,
       "GET"
     );
+  }
+
+  public getReadme(owner: string, name: string): Promise<ReadmeResponse> {
+    return this._makeRequest(`/repositorio/${owner}/${name}/readme`, "GET");
   }
 }
 

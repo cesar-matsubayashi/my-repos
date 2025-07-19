@@ -8,5 +8,6 @@ namespace MyRepos.Application.Common.Services
         Task<RawGithubRepositoryResponse> GetGithubRepository(string url);
         Task<List<RawGithubRepositoryResponse>> GetAllGithubRepositoryByUser(string user);
         Task<RawGithubSearchResponse> GetAllGithubRepositoryByName(string name, int page);
+        Task<RawGithubReadmeResponse> GetRepositoryReadme(string owner, string repositoryName);
     }
 }

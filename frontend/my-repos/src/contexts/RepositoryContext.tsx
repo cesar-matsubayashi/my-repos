@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, type ReactNode } from "react";
-import type { RepositoryResponse, SearchResponse, GithubRepositoryResponse } from "../utils/api";
+import type { RepositoryResponse, SearchResponse, GithubRepositoryResponse, ReadmeResponse } from "../utils/api";
 import api from "../utils/api";
 
 interface RepositoryContextType {
@@ -16,6 +16,8 @@ interface RepositoryContextType {
   changeFavoriteStatus: (repository: RepositoryResponse) => Promise<void>;
   changeGithubResponseFavorite: (repository: GithubRepositoryResponse) => Promise<void>;
   searchRepositories: (keyword: string, page: number) => Promise<void>;
+  getReadme: (owner: string, name: string) => Promise<void>;
+  readme: ReadmeResponse;
 }
 
 const RepositoryContext = createContext<RepositoryContextType | undefined>(
@@ -32,6 +34,13 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
   const [githubRepositoryList, setGithubRepositoryList] = 
     useState<GithubRepositoryResponse[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [readme, setReadme] = useState<ReadmeResponse>({
+    content: "",
+    encoding: "",
+    sha: "",
+    url: "",
+    downloadUrl: ""
+  });
 
   const getRepositories = async (): Promise<void> => {
     try {
@@ -118,6 +127,15 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
     }
   };
 
+  const getReadme = async (owner: string, name: string): Promise<void> => {
+    try {
+      const readme = await api.getReadme(owner, name);
+      setReadme(readme);
+    } catch (error) {
+      console.error("Failed to create repository:", error);
+    }
+  };
+
   return (
     <RepositoryContext.Provider value={{ 
       repositoryList, 
@@ -132,7 +150,9 @@ export default function RepositoryProvider({ children }: { children: ReactNode }
       searchRepositories,
       searchValue, 
       setSearchValue,
-      getRepositories }}>
+      getRepositories,
+      getReadme,
+      readme }}>
       {children}
     </RepositoryContext.Provider>
   );
